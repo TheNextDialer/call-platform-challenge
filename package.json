@@ -1,0 +1,8 @@
+{
+  "name": "call-platform-challenge",
+  "version": "1.0.0",
+  "description": "Call platform CI challenge — fix all 5 modules",
+  "scripts": {
+    "test": "./check.sh"
+  }
+}
