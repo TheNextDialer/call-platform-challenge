@@ -26,9 +26,14 @@ for r in "${RESULTS[@]}"; do
   echo "$r"
 done
 
+# Generate verification code
+VERIFY_INPUT="cp-${PASS}-${FAIL}-phoneburner"
+VERIFY_CODE=$(echo -n "$VERIFY_INPUT" | shasum -a 256 | cut -c1-8)
+
 echo ""
 echo "──────────────────────────────────────────"
 echo "  $PASS / ${#MODULES[@]} modules passing"
+echo "  Verification: $VERIFY_CODE"
 echo "──────────────────────────────────────────"
 echo ""
 
