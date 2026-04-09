@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MODULES=("call-queue" "rate-limiter" "transcript-search" "webhook-retry" "call-metrics")
+MODULES=("call-routing" "dial-scheduler" "call-recording-store" "contact-dedup" "voicemail-drop" "campaign-analytics" "sip-parser" "billing-calculator")
 PASS=0
 FAIL=0
 RESULTS=()

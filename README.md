@@ -2,9 +2,9 @@
 
 ## The Situation
 
-CI is broken. Five independent modules, each with failing tests. Your job: **make all 5 green.**
+CI is broken. Eight independent modules, each with failing tests. Your job: **make all 8 green.**
 
-This section contains roughly **30 minutes of work**. You have **10 minutes**.
+This section contains roughly **80 minutes of work**. You have **10 minutes**.
 
 We're not testing whether you can fix bugs. We're testing **how you work**.
 
@@ -16,26 +16,25 @@ cd call-platform-challenge
 ./check.sh
 ```
 
-You'll see 5 failing modules. Each has its own test suite under `modules/<name>/test/`.
+You'll see 8 failing modules. Each has its own test suite under `modules/<name>/test/`.
 
 Run an individual module:
 ```bash
-node modules/call-queue/test/run.js
-node modules/rate-limiter/test/run.js
-node modules/transcript-search/test/run.js
-node modules/webhook-retry/test/run.js
-node modules/call-metrics/test/run.js
+node modules/<name>/test/run.js
 ```
 
 ## The Modules
 
-| Module | What It Does | Failing Tests |
-|--------|-------------|---------------|
-| **call-queue** | Priority queue for outbound call ordering | 4 |
-| **rate-limiter** | Sliding-window API rate limiting per account | 4 |
-| **transcript-search** | TF-IDF search index for call transcripts | 4 |
-| **webhook-retry** | Exponential backoff with circuit breaker | 4 |
-| **call-metrics** | Real-time call center metric aggregation | 4 |
+| Module | What It Does |
+|--------|-------------|
+| **call-routing** | Geographic round-robin call routing with Haversine distance |
+| **dial-scheduler** | Timezone-aware outbound call scheduling with DNC rules |
+| **call-recording-store** | Chunked audio recording reassembly and storage |
+| **contact-dedup** | Fuzzy contact deduplication with Levenshtein distance |
+| **voicemail-drop** | VM tone detection and pre-recorded message playback |
+| **campaign-analytics** | Multi-step drip campaign funnel metrics |
+| **sip-parser** | SIP protocol message parser and validator |
+| **billing-calculator** | Per-minute billing with volume tiers and currency conversion |
 
 The modules are **completely independent** — no shared code, no shared state.
 
