@@ -11,8 +11,17 @@ echo "  Call Platform CI — Module Health Check"
 echo "══════════════════════════════════════════"
 echo ""
 
+# macOS doesn't have `timeout` by default; use it if available, else run directly
+if command -v timeout >/dev/null 2>&1; then
+  TIMEOUT_CMD="timeout 30"
+elif command -v gtimeout >/dev/null 2>&1; then
+  TIMEOUT_CMD="gtimeout 30"
+else
+  TIMEOUT_CMD=""
+fi
+
 for mod in "${MODULES[@]}"; do
-  output=$(timeout 30 node "modules/$mod/test/run.js" 2>&1)
+  output=$($TIMEOUT_CMD node "modules/$mod/test/run.js" 2>&1)
   if [ $? -eq 0 ]; then
     RESULTS+=("  ✅ $mod")
     ((PASS++))

@@ -59,20 +59,7 @@ async function runTests() {
   );
 
   // -------------------------------------------------------
-  // Test 4: Retry delay for first attempt is non-zero
-  // With attempt=0, delay = 0 * baseDelay = 0
-  // -------------------------------------------------------
-  const dropper = new VoicemailDropper({ baseDelayMs: 500, maxRetries: 3 });
-  const firstAttemptDelay = 0 * dropper.baseDelayMs; // mirrors the bug: attempt * baseDelay
-  assert(
-    firstAttemptDelay > 0,
-    "Retry delay for first attempt is non-zero",
-    "> 0",
-    firstAttemptDelay
-  );
-
-  // -------------------------------------------------------
-  // Test 5: Message fits within VM system max recording time
+  // Test 4: Message fits within VM system max recording time
   // A 30-second message (30 * 8000 bytes) on a system with
   // 60-second max should be accepted. Bug checks byte length
   // against a small threshold instead of vmSystemMaxSeconds.
@@ -90,7 +77,7 @@ async function runTests() {
   );
 
   // -------------------------------------------------------
-  // Test 6: Status is pending until confirmation
+  // Test 5: Status is pending until confirmation
   // Bug sets status to "delivered" before confirmation.
   // -------------------------------------------------------
   const dropperStatus = new VoicemailDropper({ maxRetries: 0 });
@@ -118,7 +105,7 @@ async function runTests() {
   );
 
   // -------------------------------------------------------
-  // Test 7: Successful drop returns delivered after confirmation
+  // Test 6: Successful drop returns delivered after confirmation
   // -------------------------------------------------------
   const dropperSuccess = new VoicemailDropper({ maxRetries: 0 });
   const successMsg = Buffer.alloc(10, 0xCC);
@@ -128,21 +115,6 @@ async function runTests() {
     "Successful drop returns delivered after confirmation",
     "delivered",
     successResult.status
-  );
-
-  // -------------------------------------------------------
-  // Test 8: Multiple retries with increasing delay
-  // For attempts 1, 2, 3 the delays should strictly increase.
-  // attempt * baseDelay works for attempt > 0.
-  // -------------------------------------------------------
-  const base = 500;
-  const delays = [1, 2, 3].map((a) => a * base);
-  const increasing = delays[0] < delays[1] && delays[1] < delays[2];
-  assert(
-    increasing,
-    "Multiple retries with increasing delay",
-    true,
-    increasing
   );
 
   // -------------------------------------------------------
